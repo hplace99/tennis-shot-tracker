@@ -9,26 +9,22 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
   })
 );
 
 app.use(express.json());
 
-// Test route
 app.get("/", (req, res) => {
   res.json({
     message: "Tennis Shot Tracker API is running.",
   });
 });
 
-// Session routes
 app.use("/api/sessions", sessionRoutes);
 
-// Connect to MongoDB, then start the server
 async function startServer() {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
